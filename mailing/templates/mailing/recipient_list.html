@@ -1,0 +1,18 @@
+{% extends 'mailing/base.html' %}
+
+{% block title %}Список получателей{% endblock %}
+{% block header %}Получатели email-рассылок{% endblock %}
+{% block subheader %}Список всех получателей email-рассылок в системе EasyMail{% endblock %}
+
+{% block content %}
+<div class="container">
+    <a href="{% url 'mailing:recipient_create' %}" class="btn btn-outline-success mb-3">Добавить получателя</a>
+    <ul class="list-group">
+        {% for recipient in recipients %}
+            <li class="list-group-item">
+                <a href="{% url 'mailing:recipient_detail' recipient.pk %}">{{ recipient.full_name }}</a> - {{ recipient.email }}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
