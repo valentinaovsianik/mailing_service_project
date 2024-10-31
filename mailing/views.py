@@ -1,7 +1,16 @@
 from django.urls import reverse_lazy
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Recipient, Message, Mailing
+
+
+class AboutView(TemplateView):
+    template_name = 'mailing/about.html'
+
+
+class ContactsView(TemplateView):
+    template_name = 'mailing/contacts.html'
+
 
 # Представления для модели Recipient
 class RecipientListView(ListView):
@@ -74,18 +83,24 @@ class MailingCreateView(CreateView):
     model = Mailing
     template_name = 'mailing/mailing_form.html'
     fields = ['send_time_start', 'send_time_end', 'status', 'message', 'recipients']
-    success_url = reverse_lazy('mailing_list')
+    success_url = reverse_lazy('mailing:mailing_list')
 
 class MailingUpdateView(UpdateView):
     model = Mailing
     template_name = 'mailing/mailing_form.html'
     fields = ['send_time_start', 'send_time_end', 'status', 'message', 'recipients']
-    success_url = reverse_lazy('mailing_list')
+    success_url = reverse_lazy('mailing:mailing_list')
 
 class MailingDeleteView(DeleteView):
     model = Mailing
     template_name = 'mailing/mailing_confirm_delete.html'
-    success_url = reverse_lazy('mailing_list')
+    success_url = reverse_lazy('mailing:mailing_list')
+
+    #def send_mailing_view(request, pk):
+        #mailing = get_object_or_404(Mailing, pk=pk)
+        #send_mailing(mailing)
+        #messages.success(request, f'Рассылка "{mailing}" была отправлена.')
+        #return redirect('mailing_detail', pk=pk)
 
 
 def index(request):
