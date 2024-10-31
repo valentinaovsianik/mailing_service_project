@@ -1,0 +1,17 @@
+{% load static %}
+<header class="header" style="display: flex; align-items: center; justify-content: space-between; padding: 10px;">
+    </div>
+    <nav class="header-nav" style="display: flex; align-items: center; gap: 10px;">
+        <a class="btn btn-primary" href="{% url 'mailing:recipient_list' %}">Получатели</a>
+        <a class="btn btn-primary" href='{% url 'mailing:message_list' %}'">Сообщения</a>
+        <button class="btn btn-primary" href='{% url 'mailing:index' %}'">Рассылки</button>
+        <button class="btn btn-primary" href='{% url 'mailing:index' %}'">О нас</button>
+        <button class="btn btn-primary" href='{% url 'mailing:index' %}'">Контакты</button>
+        <button class="btn btn-primary">Блог</button>
+           </nav>
+    <div style="margin-left: 20px;">
+        <button class="btn btn-primary">Войти</button>
+        <button class="btn btn-success">Зарегистрироваться</button>
+
+    </nav>
+</header>
