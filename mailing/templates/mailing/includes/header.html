@@ -1,12 +1,14 @@
 {% load static %}
 <header class="header" style="display: flex; align-items: center; justify-content: space-between; padding: 10px;">
-    </div>
-    <nav class="header-nav" style="display: flex; align-items: center; gap: 10px;">
+   <a href="{% url 'mailing:index' %}" class="header-title" style="font-size: 24px; font-weight: bold; color: #333; text-decoration: none;">
+            EasyMail
+        </a>
+    <nav class="header-nav" style="display: flex; align-items: center; gap: 10px; margin-left: -550px;"">
         <a class="btn btn-primary" href="{% url 'mailing:recipient_list' %}">Получатели</a>
         <a class="btn btn-primary" href='{% url 'mailing:message_list' %}'">Сообщения</a>
-        <button class="btn btn-primary" href='{% url 'mailing:index' %}'">Рассылки</button>
-        <button class="btn btn-primary" href='{% url 'mailing:index' %}'">О нас</button>
-        <button class="btn btn-primary" href='{% url 'mailing:index' %}'">Контакты</button>
+        <a class="btn btn-primary" href='{% url 'mailing:mailing_list' %}'">Рассылки</a>
+        <a class="btn btn-primary" href='{% url 'mailing:about' %}'">О нас</a>
+        <a class="btn btn-primary" href='{% url 'mailing:contacts' %}'">Контакты</a>
         <button class="btn btn-primary">Блог</button>
            </nav>
     <div style="margin-left: 20px;">
