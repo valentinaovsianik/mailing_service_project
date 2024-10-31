@@ -1,0 +1,14 @@
+{% extends "mailing/base.html" %}
+
+{% load static %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+<div style="margin-left: 20px;">
+<h2>Email-рассылки EasyMail в цифрах:</h2>
+<p>Количество всех рассылок: {{ total_mailings }}</p>
+<p>Количество активных рассылок: {{ active_mailings }}</p>
+<p>Количество уникальных получателей: {{ unique_recipients }}</p>
+</div>
+{% endblock %}
