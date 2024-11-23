@@ -109,7 +109,7 @@ def send_mailing(request, pk):
             send_mail(
                 subject=mailing.message.subject,
                 message=mailing.message.content,
-                from_email='from@example.com',
+                from_email='EasyMail@example.com',
                 recipient_list=[recipient.email],
             )
             MailingAttempt.objects.create(
@@ -125,7 +125,7 @@ def send_mailing(request, pk):
             )
 
     mailing.update_status()
-    return render(request, 'mailing/send_confirmation.html', {'mailing': mailing})
+    return render(request, 'mailing/mailing_send_confirmation.html', {'mailing': mailing})
 
 
 

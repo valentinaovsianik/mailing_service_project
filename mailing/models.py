@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.timezone import now
 
 class Recipient(models.Model):
     """Модель для хранения информации о клиентах"""

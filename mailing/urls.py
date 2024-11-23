@@ -4,7 +4,7 @@ from .views import AboutView, ContactsView
 from .views import (
     RecipientListView, RecipientDetailView, RecipientCreateView, RecipientUpdateView, RecipientDeleteView,
     MessageListView, MessageDetailView, MessageCreateView, MessageUpdateView, MessageDeleteView,
-    MailingListView, MailingDetailView, MailingCreateView, MailingUpdateView, MailingDeleteView
+    MailingListView, MailingDetailView, MailingCreateView, MailingUpdateView, MailingDeleteView, send_mailing
 )
 
 app_name = "mailing"
@@ -32,5 +32,6 @@ urlpatterns = [
     path('mailings/create/', MailingCreateView.as_view(), name='mailing_create'),
     path('mailings/<int:pk>/edit/', MailingUpdateView.as_view(), name='mailing_edit'),
     path('mailings/<int:pk>/delete/', MailingDeleteView.as_view(), name='mailing_delete'),
+    path('mailings/<int:pk>/send/', send_mailing, name='mailing_send'), # Ручная отправка рассылки
 
 ]

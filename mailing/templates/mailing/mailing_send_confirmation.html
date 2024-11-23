@@ -1,0 +1,24 @@
+{% extends 'mailing/base.html' %}
+
+{% block title %}Подтвердить отправку рассылки{% endblock %}
+{% block header %}Подтверждение отправки{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Вы уверены, что хотите отправить эту рассылку?</h2>
+    <div class="card my-4">
+        <div class="card-body">
+            <h5 class="card-title">Сообщение: {{ mailing.message.subject }}</h5>
+            <p class="card-text"><strong>Текст сообщения:</strong> {{ mailing.message.content }}</p>
+            <p class="card-text"><strong>Получатели:</strong> {{ mailing.recipients.all|join:", " }}</p>
+            <p class="card-text"><strong>Дата начала отправки:</strong> {{ mailing.send_time_start }}</p>
+            <p class="card-text"><strong>Дата окончания отправки:</strong> {{ mailing.send_time_end }}</p>
+        </div>
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Отправить</button>
+        <a href="{% url 'mailing:mailing_list' %}" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>
+{% endblock %}
