@@ -1,0 +1,17 @@
+{% extends 'mailing/base.html' %}
+
+{% block title %}Список рассылок{% endblock %}
+{% block header %}Список рассылок{% endblock %}
+
+{% block content %}
+<div style="padding-left: 20px !important;">
+    <a href="{% url 'mailing:mailing_create' %}" class="btn btn-outline-success mb-3">Создать рассылку</a>
+    <ul class="list-group">
+        {% for mailing in mailings %}
+            <li class="list-group-item">
+                <a href="{% url 'mailing:mailing_detail' mailing.id %}">{{ mailing }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

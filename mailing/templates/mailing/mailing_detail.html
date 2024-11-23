@@ -1,0 +1,20 @@
+{% extends 'mailing/base.html' %}
+
+{% block title %}Детали рассылки{% endblock %}
+{% block header %}Детали рассылки{% endblock %}
+
+{% block content %}
+<div style="padding-left: 20px !important;">
+    <h2>{{ mailing }}</h2>
+    <p><strong>Начало отправки:</strong> {{ mailing.send_time_start }}</p>
+    <p><strong>Конец отправки:</strong> {{ mailing.send_time_end }}</p>
+    <p><strong>Статус:</strong> {{ mailing.get_status_display }}</p>
+    <p><strong>Сообщение:</strong> {{ mailing.message }}</p>
+    <p><strong>Получатели:</strong> {{ mailing.recipients.all|join:", " }}</p>
+    
+    <a href="{% url 'mailing:mailing_edit' mailing.id %}" class="btn btn-outline-warning">Редактировать</a>
+    <a href="{% url 'mailing:mailing_delete' mailing.id %}" class="btn btn-outline-danger">Удалить</a>
+
+    <a href="{% url 'mailing:mailing_list' %}" class="btn btn-outline-primary">Назад к списку</a>
+</div>
+{% endblock %}

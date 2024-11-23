@@ -1,7 +1,9 @@
 from django.urls import reverse_lazy
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Recipient, Message, Mailing
+from .models import Recipient, Message, Mailing, MailingAttempt
+from django.core.mail import send_mail
+
 
 
 class AboutView(TemplateView):
@@ -81,14 +83,14 @@ class MailingDetailView(DetailView):
 
 class MailingCreateView(CreateView):
     model = Mailing
-    template_name = 'mailing/mailing_form.html'
     fields = ['send_time_start', 'send_time_end', 'status', 'message', 'recipients']
+    template_name = 'mailing/mailing_form.html'
     success_url = reverse_lazy('mailing:mailing_list')
 
 class MailingUpdateView(UpdateView):
     model = Mailing
-    template_name = 'mailing/mailing_form.html'
     fields = ['send_time_start', 'send_time_end', 'status', 'message', 'recipients']
+    template_name = 'mailing/mailing_form.html'
     success_url = reverse_lazy('mailing:mailing_list')
 
 class MailingDeleteView(DeleteView):
@@ -96,11 +98,35 @@ class MailingDeleteView(DeleteView):
     template_name = 'mailing/mailing_confirm_delete.html'
     success_url = reverse_lazy('mailing:mailing_list')
 
-    #def send_mailing_view(request, pk):
-        #mailing = get_object_or_404(Mailing, pk=pk)
-        #send_mailing(mailing)
-        #messages.success(request, f'Рассылка "{mailing}" была отправлена.')
-        #return redirect('mailing_detail', pk=pk)
+
+def send_mailing(request, pk):
+    """Отправка рассылки вручную"""
+    mailing = get_object_or_404(Mailing, pk=pk)
+    recipients = mailing.recipients.all()
+
+    for recipient in recipients:
+        try:
+            send_mail(
+                subject=mailing.message.subject,
+                message=mailing.message.content,
+                from_email='from@example.com',
+                recipient_list=[recipient.email],
+            )
+            MailingAttempt.objects.create(
+                mailing=mailing,
+                status='success',
+                server_response="Сообщение отправлено успешно"
+            )
+        except Exception as e:
+            MailingAttempt.objects.create(
+                mailing=mailing,
+                status='failed',
+                server_response=str(e)
+            )
+
+    mailing.update_status()
+    return render(request, 'mailing/send_confirmation.html', {'mailing': mailing})
+
 
 
 def index(request):
@@ -108,10 +134,10 @@ def index(request):
     total_mailings = Mailing.objects.count()
 
     # Подсчёт количества активных рассылок (со статусом 'Запущена')
-    active_mailings = Mailing.objects.filter(status='Запущена').count()
+    active_mailings = Mailing.objects.filter(status='started').count()
 
     # Подсчёт количества уникальных получателей
-    unique_recipients = Recipient.objects.count()
+    unique_recipients = Recipient.objects.distinct().count()
 
     context = {
         'total_mailings': total_mailings,

@@ -3,12 +3,11 @@
 {% load static %}
 
 {% block title %}Главная страница{% endblock %}
-
 {% block content %}
 <div style="margin-left: 20px;">
-<h2>Email-рассылки EasyMail в цифрах:</h2>
-<p>Количество всех рассылок: {{ total_mailings }}</p>
-<p>Количество активных рассылок: {{ active_mailings }}</p>
-<p>Количество уникальных получателей: {{ unique_recipients }}</p>
+<h2>Статистика рассылок EasyMail:</h2>
+<p>Всего рассылок: {{ total_mailings }}</p>
+<p>Активных рассылок: {{ active_mailings }}</p>
+<p>Уникальных получателей: {{ unique_recipients }}</p>
 </div>
 {% endblock %}
