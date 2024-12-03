@@ -5,16 +5,24 @@
 
 {% block content %}
 <div style="padding-left: 20px !important;">
-    <h2>{{ mailing }}</h2>
-    <p><strong>Начало отправки:</strong> {{ mailing.send_time_start }}</p>
-    <p><strong>Конец отправки:</strong> {{ mailing.send_time_end }}</p>
-    <p><strong>Статус:</strong> {{ mailing.get_status_display }}</p>
-    <p><strong>Сообщение:</strong> {{ mailing.message }}</p>
-    <p><strong>Получатели:</strong> {{ mailing.recipients.all|join:", " }}</p>
-    
-    <a href="{% url 'mailing:mailing_edit' mailing.id %}" class="btn btn-outline-warning">Редактировать</a>
-    <a href="{% url 'mailing:mailing_delete' mailing.id %}" class="btn btn-outline-danger">Удалить</a>
+    {% if is_manager or mailing.created_by == user %}
+        <h2>{{ mailing }}</h2>
+        <p><strong>Начало отправки:</strong> {{ mailing.send_time_start }}</p>
+        <p><strong>Конец отправки:</strong> {{ mailing.send_time_end }}</p>
+        <p><strong>Статус:</strong> {{ mailing.get_status_display }}</p>
+        <p><strong>Сообщение:</strong> {{ mailing.message }}</p>
+        <p><strong>Получатели:</strong> {{ mailing.recipients.all|join:", " }}</p>
+    {% endif %}
 
-    <a href="{% url 'mailing:mailing_list' %}" class="btn btn-outline-primary">Назад к списку</a>
+    {% if mailing.created_by == user %}
+        <a href="{% url 'mailing:mailing_edit' mailing.id %}" class="btn btn-outline-warning">Редактировать</a>
+        <a href="{% url 'mailing:mailing_delete' mailing.id %}" class="btn btn-outline-danger">Удалить</a>
+    {% endif %}
+
+    {% if mailing.created_by == user and mailing.status == "created" %}
+        <a href="{% url 'mailing:mailing_send_confirmation' mailing.id %}" class="btn btn-outline-success">Отправить рассылку</a>
+    {% endif %}
+
+        <a href="{% url 'mailing:mailing_list' %}" class="btn btn-outline-primary">Назад к списку</a>
 </div>
 {% endblock %}

@@ -6,11 +6,13 @@
 
 {% block content %}
 <div class="container">
+    {% if recipient.created_by == user %}
     <p>Вы действительно хотите удалить получателя <strong>{{ recipient.full_name }}</strong> ({{ recipient.email }})?</p>
     <form method="post">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger">Удалить</button>
         <a href="{% url 'mailing:recipient_list' %}" class="btn btn-secondary">Отмена</a>
     </form>
+    {% endif %}
 </div>
 {% endblock %}

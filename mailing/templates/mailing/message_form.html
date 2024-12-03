@@ -3,6 +3,7 @@
 {% block title %}Создать/Редактировать сообщение{% endblock %}
 {% block header %}{{ view.object.pk|yesno:"Редактировать,Создать" }} сообщение{% endblock %}
 {% block content %}
+<div class="container mt-4">
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}

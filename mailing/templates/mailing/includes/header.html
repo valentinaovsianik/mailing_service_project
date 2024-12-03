@@ -4,9 +4,11 @@
         EasyMail
    </a>
    <nav class="header-nav" style="display: flex; align-items: center; gap: 10px; margin-left: -550px;">
+   {% if user.is_authenticated %}
        <a class="btn btn-primary" href="{% url 'mailing:recipient_list' %}">Получатели</a>
        <a class="btn btn-primary" href="{% url 'mailing:message_list' %}">Сообщения</a>
        <a class="btn btn-primary" href="{% url 'mailing:mailing_list' %}">Рассылки</a>
+   {% endif %}
        <a class="btn btn-primary" href="{% url 'mailing:about' %}">О нас</a>
        <a class="btn btn-primary" href="{% url 'mailing:contacts' %}">Контакты</a>
        <a class="btn btn-primary" href="{% url 'blog:blogpost_list' %}">Блог</a>

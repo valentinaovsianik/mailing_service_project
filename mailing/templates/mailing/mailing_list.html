@@ -5,6 +5,14 @@
 
 {% block content %}
 <div style="padding-left: 20px !important;">
+    {% if is_manager %}
+        {% for mailing in mailings %}
+        <li class="list-group-item">
+            <a href="{% url 'mailing:mailing_detail' mailing.id %}">{{ mailing }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
     <a href="{% url 'mailing:mailing_create' %}" class="btn btn-outline-success mb-3">Создать рассылку</a>
     <ul class="list-group">
         {% for mailing in mailings %}
@@ -12,6 +20,7 @@
                 <a href="{% url 'mailing:mailing_detail' mailing.id %}">{{ mailing }}</a>
             </li>
         {% endfor %}
+    {% endif %}
     </ul>
 </div>
 {% endblock %}

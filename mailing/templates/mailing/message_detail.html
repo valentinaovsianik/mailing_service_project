@@ -4,12 +4,16 @@
 {% block header %}Детали сообщения{% endblock %}
 {% block content %}
 <div style="padding-left: 20px !important;">
+    {% if message.created_by == request.user %}
     <h2>{{ message.subject }}</h2>
     <p>{{ message.body }}</p>
     <div class="mt-5">
         <a href="{% url 'mailing:message_edit' message.id %}" class="btn btn-outline-warning">Редактировать</a>
         <a href="{% url 'mailing:message_delete' message.id %}" class="btn btn-outline-danger">Удалить</a>
-        <a href="{% url 'mailing:message_list' %}" class="btn btn-outline-primary">Назад к списку сообщений</a>
     </div>
+    {% else %}
+    <p>У вас нет доступа к этой рассылке.</p>
+    {% endif %}
+    <a href="{% url 'mailing:message_list' %}" class="btn btn-outline-primary">Назад к списку сообщений</a>
 </div>
 {% endblock %}

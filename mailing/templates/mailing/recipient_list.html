@@ -6,13 +6,24 @@
 
 {% block content %}
 <div class="container">
-    <a href="{% url 'mailing:recipient_create' %}" class="btn btn-outline-success mb-3">Добавить получателя</a>
     <ul class="list-group">
+        {% if is_manager %}
         {% for recipient in recipients %}
             <li class="list-group-item">
                 <a href="{% url 'mailing:recipient_detail' recipient.pk %}">{{ recipient.full_name }}</a> - {{ recipient.email }}
+            <span class="badge bg-info">Добавлен: {{ recipient.created_by.email }}</span>
             </li>
         {% endfor %}
     </ul>
+    {% else %}
+        <a href="{% url 'mailing:recipient_create' %}" class="btn btn-outline-success mb-3">Добавить получателя</a>
+    <ul class="list-group">
+            {% for recipient in recipients %}
+                <li class="list-group-item">
+                    <a href="{% url 'mailing:recipient_detail' recipient.pk %}">{{ recipient.full_name }}</a> - {{ recipient.email }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 </div>
 {% endblock %}

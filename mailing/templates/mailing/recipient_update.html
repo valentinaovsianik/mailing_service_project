@@ -7,7 +7,9 @@
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
+    {% if recipient.created_by == user %}
     <button type="submit" class="btn btn-primary">Сохранить изменения</button>
     <a href="{% url 'recipient_list' %}" class="btn btn-secondary">Отмена</a>
+    {% endif %}
 </form>
 {% endblock %}
